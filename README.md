@@ -1,4 +1,4 @@
-![Screenshot 2025-09-27 140005](https://github.com/user-attachments/assets/1fbb86e9-4075-4fc9-a0b2-cc853a78feec)Credential Needed for this agent
+Credential Needed for this agent
 
 1.openAiApi
 
