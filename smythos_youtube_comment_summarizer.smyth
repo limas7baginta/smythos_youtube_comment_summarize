@@ -1,0 +1,159 @@
+{
+  "name": "YouTube Comment Summarizer",
+  "components": [
+    {
+      "id": "2a67ad9a-dcc2-4ef0-abca-f3255d63c2d0",
+      "name": "Sticky Note",
+      "type": "code",
+      "config": {
+        "content": "Placeholder for YouTube Comment Summarizer",
+        "height": 530,
+        "width": 1100,
+        "color": 5
+      }
+    },
+    {
+      "id": "2fde1554-d2d7-49c3-b337-405b6c3136c9",
+      "name": "Webhook Trigger",
+      "type": "code",
+      "config": {
+        "httpMethod": "POST",
+        "path": "youtube-comment-summarizer"
+      }
+    },
+    {
+      "id": "82191399-1a68-400c-9bea-0c3a9aa2ac37",
+      "name": "Text Splitter",
+      "type": "code",
+      "config": {
+        "chunkSize": 400,
+        "chunkOverlap": 40
+      }
+    },
+    {
+      "id": "8a7643de-d014-4377-9055-79ee738b6231",
+      "name": "Embeddings",
+      "type": "code",
+      "config": {
+        "model": "text-embedding-3-small",
+        "options": {}
+      }
+    },
+    {
+      "id": "841e4571-f1c6-49e0-8520-5d4a244b057f",
+      "name": "Pinecone Insert",
+      "type": "code",
+      "config": {
+        "mode": "insert",
+        "options": {},
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "youtube_comment_summarizer",
+          "mode": "list",
+          "cachedResultName": "youtube_comment_summarizer"
+        }
+      }
+    },
+    {
+      "id": "d85e823f-715b-489b-9628-61ce63cb33fe",
+      "name": "Pinecone Query",
+      "type": "code",
+      "config": {
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "youtube_comment_summarizer",
+          "mode": "list",
+          "cachedResultName": "youtube_comment_summarizer"
+        }
+      }
+    },
+    {
+      "id": "0737745f-be5b-4e98-b85b-45a3412f09e9",
+      "name": "Vector Tool",
+      "type": "code",
+      "config": {
+        "name": "Pinecone",
+        "description": "Vector context"
+      }
+    },
+    {
+      "id": "b8a28d57-b2d0-4ccd-8748-d484099c2bd5",
+      "name": "Window Memory",
+      "type": "code",
+      "config": {}
+    },
+    {
+      "id": "93fe9b1d-0b94-4f3a-a864-fda08cd201ce",
+      "name": "Chat Model",
+      "type": "code",
+      "config": {
+        "options": {}
+      }
+    },
+    {
+      "id": "a3218023-dcc5-4302-9506-a498a28823b4",
+      "name": "RAG Agent",
+      "type": "code",
+      "config": {
+        "promptType": "define",
+        "text": "Handle data",
+        "options": {
+          "systemMessage": "You are an assistant for YouTube Comment Summarizer"
+        }
+      }
+    },
+    {
+      "id": "1d624247-2c74-46c5-89e4-624b0c62bb87",
+      "name": "Append Sheet",
+      "type": "code",
+      "config": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "SHEET_ID",
+          "mode": "list",
+          "cachedResultName": "YouTube Comment Summarizer"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Log",
+          "mode": "list",
+          "cachedResultName": "Log"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": "Status",
+          "schema": []
+        }
+      }
+    },
+    {
+      "id": "361ae790-4e53-4a0c-8684-5a448b2ae5e9",
+      "name": "Slack Alert",
+      "type": "code",
+      "config": {
+        "channel": "#alerts",
+        "text": "YouTube Comment Summarizer error: {$json.error.message}"
+      }
+    }
+  ],
+  "connections": [
+    {
+      "from": "Webhook Trigger",
+      "to": "Text Splitter"
+    },
+    {
+      "from": "Webhook Trigger",
+      "to": "Window Memory"
+    },
+    {
+      "from": "Text Splitter",
+      "to": "Embeddings"
+    },
+    {
+      "from": "RAG Agent",
+      "to": "Append Sheet"
+    }
+  ],
+  "default_model": "gpt-4o"
+}
