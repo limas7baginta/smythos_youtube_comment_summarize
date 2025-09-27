@@ -9,5 +9,5 @@ Credential Needed for this agent
 4.slackApi
 
 
-![Screenshot 2025-09-27 140005](https://github.com/user-attachments/assets/0ec65274-f18c-428f-a33e-f30cff48b0a0)
+![Screenshot 2025-09-27 140005](https://github.com/user-attachments/assets/d0addce5-9c1d-499a-a210-debe75fdecab)
 
